@@ -1,0 +1,24 @@
+    1 sudo adduser paulinho_h
+    2 sudo usermod -aG sudo paulinho_h
+    3 su paulinho_h
+    4 sudo apt update && sudo apt upgrade -y
+    5 sudo  apt  install  apt-transport-https  ca-certificates  curl  software-properties-common
+    6 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    7 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/>
+    8 sudo apt update
+    9 sudo apt install docker-ce docker-ce-cli containerd.io
+    10 docker version
+    11 sudo usermod -aG docker $USER
+    12 newgrp docker
+    13 mkdir testdocker
+    14 cd testdocker
+    15 git clone https://github.com/diced/zipline.git
+    16 cd zipline/
+    17 echo "POSTGRESQL_PASSWORD=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" > .env
+    18 echo "CORE_SECRET=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" >> .env
+    19 docker compose up -d
+    20 docker ps
+    21 docker compose down
+    22 nano docker-compose.yml
+    23 docker compose up -d
+    24 history > docker-history.txt
